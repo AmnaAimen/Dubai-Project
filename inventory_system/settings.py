@@ -132,6 +132,16 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+
+
+
+# Agar aapne WhiteNoise use nahi kiya, toh ye line add karein
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+
+
+
 UNFOLD = {
     "SITE_TITLE": "Dubai Project",
     "SITE_HEADER": "Dubai Project",
