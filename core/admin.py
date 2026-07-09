@@ -3,10 +3,10 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .models import MobileInventory
 from django.db.models import Max
-from unfold.admin import ModelAdmin # Import sahi hai
+from unfold.admin import ModelAdmin
 
 @admin.register(MobileInventory)
-class MobileInventoryAdmin(ModelAdmin): # Yahan 'ModelAdmin' use karein
+class MobileInventoryAdmin(ModelAdmin):
     list_display = (
         'edit_icon', 'serial_no', 'mobile_name', 'imei_no', 'actual_price', 
         'sold_price', 'remarks', 'read_status_box', 'updated_by'
@@ -14,9 +14,17 @@ class MobileInventoryAdmin(ModelAdmin): # Yahan 'ModelAdmin' use karein
     
     list_display_links = ('serial_no',)
 
-    # 1. Add button ko force karne ke liye
+    # --- PERMISSION RESTRICTIONS ---
     def has_add_permission(self, request):
-        return True
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        # Staff edit nahi kar payega
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+    # -------------------------------
 
     def edit_icon(self, obj):
         url = reverse('admin:core_mobileinventory_change', args=[obj.pk])
@@ -34,7 +42,6 @@ class MobileInventoryAdmin(ModelAdmin): # Yahan 'ModelAdmin' use karein
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
             return ('updated_by',)
-        # Agar object edit ho raha hai aur sold_price hai, tabhi fields lock hon
         if obj and obj.sold_price:
             return ('serial_no', 'mobile_name', 'imei_no', 'actual_price', 'sold_price', 'remarks', 'remarks_read', 'updated_by')
         return ('serial_no', 'updated_by')
