@@ -137,3 +137,10 @@ UNFOLD = {
     "SITE_HEADER": "Dubai Project",
     "DASHBOARD_CALLBACK": "core.admin.dashboard_callback", # Optional
 }
+
+
+# settings.py ke andar ye lines add/update karein
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://dubai-project-production-e6ad.up.railway.app',
+]
