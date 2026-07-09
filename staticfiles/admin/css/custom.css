@@ -1,0 +1,39 @@
+/* Table ke tamam text ko dark aur readable banana */
+.table td, .table th {
+    color: #333333 !important;
+}
+
+/* Serial No link ko black karna */
+.field-serial_no a { 
+    color: #000000 !important; 
+    font-weight: bold !important; 
+    text-decoration: none !important;
+}
+
+/* Read Status box ki styling */
+.status-box {
+    display: inline-block !important;
+    padding: 3px 10px !important;
+    border-radius: 4px !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    text-align: center !important;
+    width: 40px !important;
+}
+.status-read { background-color: #27ae60 !important; }
+.status-unread { background-color: #c0392b !important; }
+
+/* Header ka color green karna */
+.column-read_status_box {
+    color: #27ae60 !important;
+}
+
+/* Sign Out button ka hover issue fix karna */
+.nav-link[href*="logout"] {
+    color: #ffffff !important;
+}
+.nav-link[href*="logout"]:hover {
+    background-color: #c0392b !important;
+    color: #ffffff !important;
+}

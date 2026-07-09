@@ -1,0 +1,27 @@
+/* User menu icon ko permanent dikhane ke liye */
+.user-menu {
+    display: block !important;
+    opacity: 1 !important;
+}
+
+.user-menu .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 15px !important;
+    color: #ffffff !important; /* Icon ka color white */
+    background: transparent !important;
+}
+
+/* Icon size aur layout fix */
+.user-menu .nav-link i {
+    font-size: 20px !important;
+    display: inline-block !important;
+}
+
+/* Agar aap Text "Sign Out" bhi sath chahti hain */
+.user-menu .nav-link::after {
+    content: " Sign Out" !important;
+    font-size: 14px !important;
+    margin-left: 8px !important;
+    display: inline !important;
+}
