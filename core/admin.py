@@ -1,9 +1,56 @@
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.admin import UserAdmin, GroupAdmin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from .models import MobileInventory
 from django.db.models import Max
 from unfold.admin import ModelAdmin
+from .models import MobileInventory, Customer, Expense, Sales
+
+# --- Registering Built-in Auth Models ---
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin, ModelAdmin):
+    pass
+
+@admin.register(Group)
+class CustomGroupAdmin(GroupAdmin, ModelAdmin):
+    pass
+
+@admin.register(Customer)
+class CustomerAdmin(ModelAdmin):
+    list_display = ('name', 'phone', 'is_regular')
+
+    def has_change_permission(self, request, obj=None):
+        # Admin sab kuch edit kar sakta hai
+        if request.user.is_superuser:
+            return True
+        # Staff sirf naya record add kar sakta hai, 
+        # lekin save hone ke baad edit (change) nahi kar sakta
+        if obj is not None:
+            return False
+        return True
+
+@admin.register(Expense)
+class ExpenseAdmin(ModelAdmin):
+    list_display = ('description', 'amount', 'date', 'paid_by')
+
+    # Ye function add karein
+    def has_change_permission(self, request, obj=None):
+        # Agar user superuser hai toh edit kar sakta hai
+        if request.user.is_superuser:
+            return True
+        # Agar staff hai aur object pehle se saved hai (obj is not None), toh edit nahi kar payega
+        if obj is not None:
+            return False
+        return True
+
+@admin.register(Sales)
+class SalesAdmin(ModelAdmin):
+    list_display = ('purchase_date', 'total_amount', 'paid_amount', 'balance_amount', 'payment_mode', 'status')
+    list_filter = ('payment_mode', 'status')
 
 @admin.register(MobileInventory)
 class MobileInventoryAdmin(ModelAdmin):
@@ -15,17 +62,23 @@ class MobileInventoryAdmin(ModelAdmin):
     list_display_links = ('serial_no',)
 
     # --- PERMISSION RESTRICTIONS ---
+    def has_view_permission(self, request, obj=None):
+        # Staff ko list dekhne ki ijazat de di
+        return True
+
     def has_add_permission(self, request):
+        # Add sirf superuser kar payega
         return request.user.is_superuser
 
     def has_change_permission(self, request, obj=None):
-        # Staff edit nahi kar payega
+        # Edit sirf superuser kar payega
         return request.user.is_superuser
 
     def has_delete_permission(self, request, obj=None):
+        # Delete sirf superuser kar payega
         return request.user.is_superuser
-    # -------------------------------
 
+    # Baki functions waisay hi rahen ge
     def edit_icon(self, obj):
         url = reverse('admin:core_mobileinventory_change', args=[obj.pk])
         return mark_safe(f'<a href="{url}" style="text-decoration:none; color:#007bff;">✏️ Edit</a>')
