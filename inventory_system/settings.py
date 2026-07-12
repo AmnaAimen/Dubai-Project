@@ -157,8 +157,8 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 
 UNFOLD = {
-    "SITE_TITLE": "Dubai Project",
-    "SITE_HEADER": "Dubai Project",
+    "SITE_TITLE": "Phone O Clock",
+    "SITE_HEADER": "Phone O Clock",
     "DASHBOARD_CALLBACK": "core.admin.dashboard_callback", # Optional
 }
 
