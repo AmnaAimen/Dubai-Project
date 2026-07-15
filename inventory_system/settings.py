@@ -32,10 +32,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-   'unfold',  # Jazzmin ki jagah ye likhein
-    'unfold.contrib.filters',
-    'unfold.contrib.forms',
-    'unfold.contrib.inlines',
+
+    'jazzmin',
+   
+
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,8 +48,32 @@ INSTALLED_APPS = [
 
 
 
+JAZZMIN_SETTINGS = {
+    "site_title": "Phone O Clock",
+    "site_header": "Phone O Clock",
+    "site_brand": "Phone O Clock",
+    
+    # Ye option menu ko permanent open rakhega (Static)
+    "sidebar_fixed": True, 
+    "sidebar_nav_child_indent": True,
+    
+    # Clean aur Professional look ke liye
+    "theme": "flatly",  # Ye Unfold jaisa modern look deta hai
+    "dark_mode_theme": "darkly",
+    
+    # Admin Interface ko saaf karne ke liye
+    "show_sidebar": True,
+    "navigation_expanded": True, # Ye menu ko hamesha open rakhega
+}
 
-
+JAZZMIN_UI_TWEAKS = {
+    "navbar": "navbar-white navbar-light",  # Header white
+    "sidebar": "sidebar-light-primary",     # Sidebar white/light
+    "brand_colour": "navbar-light",
+    "accent": "accent-primary",
+    "theme": "flatly",                      # Clean professional look
+    "dark_mode_theme": None,
+}
 
 
 
@@ -82,7 +106,7 @@ ROOT_URLCONF = 'inventory_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,11 +180,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 
 
-UNFOLD = {
-    "SITE_TITLE": "Phone O Clock",
-    "SITE_HEADER": "Phone O Clock",
-    "DASHBOARD_CALLBACK": "core.admin.dashboard_callback", # Optional
-}
+
 
 
 # settings.py ke andar ye lines add/update karein

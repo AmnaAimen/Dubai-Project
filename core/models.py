@@ -33,7 +33,7 @@ class Sales(models.Model):
     STATUS_CHOICES = [('Pending', 'Pending'), ('Shipped', 'Shipped'), ('Completed', 'Completed')]
     
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    mobile = models.ForeignKey(MobileInventory, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Select Mobile (IMEI)")
+    mobile = models.ForeignKey(MobileInventory, on_delete=models.SET_NULL, null=True, blank=True)
     purchase_date = models.DateField(auto_now_add=True)
     shipment_date = models.DateField(null=True, blank=True)
     payment_mode = models.CharField(max_length=50, choices=PAYMENT_MODES, default='Cash')
